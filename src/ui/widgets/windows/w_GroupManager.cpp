@@ -105,7 +105,12 @@ GroupManager::GroupManager(QWidget *parent) : QvDialog("GroupManager", parent)
 
 void GroupManager::onRCMDeleteConnectionTriggered()
 {
-    const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    //const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    QList<ConnectionId> list;
+    for (const auto &i : SELECTED_ROWS_INDEX)
+    {
+        list.push_back(ConnectionId(connectionsTable->item(i, 0)->data(Qt::UserRole).toString()));
+    }
     for (const auto &item : list)
     {
         ConnectionManager->RemoveConnectionFromGroup(ConnectionId(item), currentGroupId);
@@ -115,7 +120,13 @@ void GroupManager::onRCMDeleteConnectionTriggered()
 
 void GroupManager::onRCMExportConnectionTriggered()
 {
-    const auto &list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    //const auto &list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    QList<ConnectionId> list;
+    for (const auto &i : SELECTED_ROWS_INDEX)
+    {
+        list.push_back(ConnectionId(connectionsTable->item(i, 0)->data(Qt::UserRole).toString()));
+    }
+
     QFileDialog d;
     switch (list.count())
     {
@@ -225,7 +236,13 @@ void GroupManager::onRCMActionTriggered_Copy()
     const auto _sender = qobject_cast<QAction *>(sender());
     const GroupId groupId{ _sender->data().toString() };
     //
-    const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    //const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    QList<ConnectionId> list;
+    for (const auto &i : SELECTED_ROWS_INDEX)
+    {
+        list.push_back(ConnectionId(connectionsTable->item(i, 0)->data(Qt::UserRole).toString()));
+    }
+    
     for (const auto &connId : list)
     {
         const auto &connectionId = ConnectionId(connId);
@@ -239,7 +256,13 @@ void GroupManager::onRCMActionTriggered_Link()
     const auto _sender = qobject_cast<QAction *>(sender());
     const GroupId groupId{ _sender->data().toString() };
     //
-    const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    //const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    QList<ConnectionId> list;
+    for (const auto &i : SELECTED_ROWS_INDEX)
+    {
+        list.push_back(ConnectionId(connectionsTable->item(i, 0)->data(Qt::UserRole).toString()));
+    }
+
     for (const auto &connId : list)
     {
         ConnectionManager->LinkConnectionWithGroup(ConnectionId(connId), groupId);
@@ -252,7 +275,13 @@ void GroupManager::onRCMActionTriggered_Move()
     const auto _sender = qobject_cast<QAction *>(sender());
     const GroupId groupId{ _sender->data().toString() };
     //
-    const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    //const auto list = GET_SELECTED_CONNECTION_IDS(SELECTED_ROWS_INDEX);
+    QList<ConnectionId> list;
+    for (const auto &i : SELECTED_ROWS_INDEX)
+    {
+        list.push_back(ConnectionId(connectionsTable->item(i, 0)->data(Qt::UserRole).toString()));
+    }
+
     for (const auto &connId : list)
     {
         ConnectionManager->MoveConnectionFromToGroup(ConnectionId(connId), currentGroupId, groupId);
